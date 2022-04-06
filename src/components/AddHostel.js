@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddHostel = () => {
 
@@ -40,6 +42,8 @@ const AddHostel = () => {
     }
 
     const submitData = (e) =>{
+        e.preventDefault();
+
         const formData = new FormData();
         formData.append('girls',data.girls);
         formData.append('boys',data.boys);
@@ -58,10 +62,10 @@ const AddHostel = () => {
 
         axios.post('http://localhost:8000/hostel/add/62480d2cbe1fc4bc1220a7c3',formData)
         .then(()=>{
-            alert("Hostel Added Successfully")
+            toast.success("Your Hostel is now live")
         })
         .catch(()=>{
-            alert("An error occur please try again later.");
+            toast.error("Something went wrong. Please try again later.")
         })
     }
 
@@ -144,6 +148,7 @@ const AddHostel = () => {
                         </form>
                     </div>
                 </div>
+                <ToastContainer/>
             </main>
         </>
     )
