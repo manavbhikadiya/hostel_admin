@@ -6,7 +6,7 @@ const Home = () => {
     const [data, setData] = useState([]);
 
     const getHostelData = () => {
-        axios.get('http://localhost:8000/hostels/62480d2cbe1fc4bc1220a7c3')
+        axios.get('http://localhost:8000/hostels/6244389382158a0a2cbe02ae')
             .then((res) => {
                 setData(res.data);
             })
@@ -56,10 +56,10 @@ const Home = () => {
                                             <td>{hostels.location}</td>
                                             <td>
                                                 <NavLink to="/">
-                                                    <i class="fa fa-trash" style={{ color: "red" }}></i>    
+                                                    <i class="fa fa-trash" style={{ color: "red" }}></i>
                                                 </NavLink>
                                                 <NavLink to="/">
-                                                    <i class="fa fa-edit" style={{ marginLeft: "20px",color:"black" }}></i>
+                                                    <i class="fa fa-edit" style={{ marginLeft: "20px", color: "black" }}></i>
                                                 </NavLink>
                                             </td>
                                         </tr>
