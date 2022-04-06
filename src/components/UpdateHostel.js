@@ -1,13 +1,18 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useState, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useLocation } from "react-router-dom";
 
-const AddHostel = () => {
-//   const search = useLocation().search;
-//   var college_id = null;
-//   var hostel_id = null;
+const UpdateHostel = () => {
+  const search = useLocation().search;
+  var college_id = null;
+  var hostel_id = null;
+
   const [file, setFiles] = useState();
+  const [initialData, setInitialData] = useState([]);
+
   const [data, setData] = useState({
     boys: false,
     girls: false,
@@ -24,25 +29,25 @@ const AddHostel = () => {
     location: "",
   });
 
-//   const getIntialHostelData = (college_id, hostel_id) => {
-//     axios
-//       .get(
-//         `http://localhost:8000/hostel/getHostelDetails/${college_id}/${hostel_id}`
-//       )
-//       .then((res) => {
-//         console.log(res.data);
-//       })
-//       .catch((e) => {
-//         console.log(e);
-//       });
-//   };
+  const getIntialHostelData = (college_id, hostel_id) => {
+    axios
+      .get(
+        `http://localhost:8000/hostel/getHostelDetails/${college_id}/${hostel_id}`
+      )
+      .then((res) => {
+        setInitialData(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
-//   useEffect(() => {
-//     college_id = new URLSearchParams(search).get("college_id");
-//     hostel_id = new URLSearchParams(search).get("hostel_id");
+  useEffect(() => {
+    college_id = new URLSearchParams(search).get("college_id");
+    hostel_id = new URLSearchParams(search).get("hostel_id");
 
-//     getIntialHostelData(college_id, hostel_id);
-//   }, []);
+    getIntialHostelData(college_id, hostel_id);
+  }, []);
 
   const handleData = (e) => {
     setData({
@@ -81,9 +86,9 @@ const AddHostel = () => {
     formData.append("hostel_image", file);
 
     axios
-      .post(`http://localhost:8000/hostel/addHostel/624d7e489a471b2aaaf3c112`, formData)
+      .post(`http://localhost:8000/hostel/update/${hostel_id}`, formData)
       .then(() => {
-        toast.success("Your Hostel is now live");
+        toast.success("Your Hostel Data Updated");
       })
       .catch(() => {
         toast.error("Something went wrong. Please try again later.");
@@ -94,19 +99,19 @@ const AddHostel = () => {
     <>
       <main id="main" className="main">
         <div className="pagetitle">
-          <h1>Add Hostel</h1>
+          <h1>Update Hostel</h1>
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">
                 <a href="index.html">Hostel</a>
               </li>
-              <li className="breadcrumb-item active">Add Hostel</li>
+              <li className="breadcrumb-item active">Update Hostel</li>
             </ol>
           </nav>
         </div>
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Post Hostel</h5>
+            <h5 class="card-title">Update Hostel</h5>
 
             <form
               class="row g-3"
@@ -252,6 +257,7 @@ const AddHostel = () => {
                     name="girls"
                     onChange={handleCheckbox}
                     id="girls"
+                    checked={data.girls}
                   />
                   <label class="form-check-label" for="girls">
                     Girls
@@ -267,6 +273,7 @@ const AddHostel = () => {
                     name="boys"
                     onChange={handleCheckbox}
                     id="boys"
+                    checked={data.boys}
                   />
                   <label class="form-check-label" for="boys">
                     Boys
@@ -275,7 +282,7 @@ const AddHostel = () => {
               </div>
               <div class="text-center">
                 <button type="submit" class="btn btn-primary">
-                  Post Hostel
+                  Update Hostel
                 </button>
               </div>
             </form>
@@ -285,4 +292,4 @@ const AddHostel = () => {
     </>
   );
 };
-export default AddHostel;
+export default UpdateHostel;
