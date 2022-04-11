@@ -1,12 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getCollegeId } from "../services/getCookies.service";
 
 const AddHostel = () => {
-//   const search = useLocation().search;
-//   var college_id = null;
-//   var hostel_id = null;
+  var college_id = getCollegeId();
   const [file, setFiles] = useState();
   const [data, setData] = useState({
     boys: false,
@@ -24,25 +23,9 @@ const AddHostel = () => {
     location: "",
   });
 
-//   const getIntialHostelData = (college_id, hostel_id) => {
-//     axios
-//       .get(
-//         `http://localhost:8000/hostel/getHostelDetails/${college_id}/${hostel_id}`
-//       )
-//       .then((res) => {
-//         console.log(res.data);
-//       })
-//       .catch((e) => {
-//         console.log(e);
-//       });
-//   };
-
-//   useEffect(() => {
-//     college_id = new URLSearchParams(search).get("college_id");
-//     hostel_id = new URLSearchParams(search).get("hostel_id");
-
-//     getIntialHostelData(college_id, hostel_id);
-//   }, []);
+  useEffect(() => {
+    college_id = getCollegeId();
+  }, []);
 
   const handleData = (e) => {
     setData({
@@ -81,7 +64,7 @@ const AddHostel = () => {
     formData.append("hostel_image", file);
 
     axios
-      .post(`http://localhost:8000/hostel/addHostel/624d7e489a471b2aaaf3c112`, formData)
+      .post(`http://localhost:8000/hostel/addHostel/${college_id}`, formData)
       .then(() => {
         toast.success("Your Hostel is now live");
       })
