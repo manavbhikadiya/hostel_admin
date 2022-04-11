@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getCollegeId } from "../services/getCookies.service";
 
 const AddHostel = () => {
   var college_id = getCollegeId();
+  const history = useHistory();
   const [file, setFiles] = useState();
   const [data, setData] = useState({
     boys: false,
@@ -66,7 +68,16 @@ const AddHostel = () => {
     axios
       .post(`http://localhost:8000/hostel/addHostel/${college_id}`, formData)
       .then(() => {
-        toast.success("Your Hostel is now live");
+        toast.success("Your Hostel is Live now", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+        history.push("/");
       })
       .catch(() => {
         toast.error("Something went wrong. Please try again later.");

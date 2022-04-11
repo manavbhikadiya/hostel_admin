@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { getCollegeId, getAdminId } from "../services/getCookies.service";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 
 const Home = () => {
@@ -24,6 +27,30 @@ const Home = () => {
         alert("Data Not found");
       });
   };
+
+  const history = useHistory();
+  const deleteHostel = (hostel_id) => {
+
+    axios
+      .post(`http://localhost:8000/hostel/delete/${hostel_id}`)
+      .then(() => {
+        toast.error("Your Hostel is Deleted", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+        history.push('/')
+        window.location.reload();
+      })
+      .catch(err => {
+        console.log(err);
+        alert("Data Not Delete");
+      })
+  }
 
   return (
     <main id="main" className="main">
@@ -62,9 +89,9 @@ const Home = () => {
                     <td>{hostels.room_price}</td>
                     <td>{hostels.location}</td>
                     <td>
-                      <NavLink to="/">
-                        <i class="fa fa-trash" style={{ color: "red" }}></i>
-                      </NavLink>
+                      <span onClick={() => deleteHostel(hostels._id)}>
+                        <i class="fa fa-trash" style={{ color: "red", cursor: "pointer" }}></i>
+                      </span>
                       <NavLink to={`/updateHostel?college_id=${collegeId}&hostel_id=${hostels._id}`}>
                         <i
                           class="fa fa-edit"

@@ -4,12 +4,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const UpdateHostel = () => {
   const search = useLocation().search;
   var college_id = null;
-  var hostel_id = null;
+  var hostel_id = new URLSearchParams(search).get("hostel_id");
 
+  const history = useHistory();
   const [file, setFiles] = useState();
   const [initialData, setInitialData] = useState([]);
 
@@ -35,6 +37,7 @@ const UpdateHostel = () => {
         `http://localhost:8000/hostel/getHostelDetails/${college_id}/${hostel_id}`
       )
       .then((res) => {
+
         setInitialData(res.data);
       })
       .catch((e) => {
@@ -45,14 +48,14 @@ const UpdateHostel = () => {
   useEffect(() => {
     college_id = new URLSearchParams(search).get("college_id");
     hostel_id = new URLSearchParams(search).get("hostel_id");
-
     getIntialHostelData(college_id, hostel_id);
   }, []);
 
   const handleData = (e) => {
-    setData({
-      ...data,
+    setInitialData({
+      ...initialData,
       [e.target.name]: e.target.value,
+
     });
   };
 
@@ -61,8 +64,8 @@ const UpdateHostel = () => {
   };
 
   const handleCheckbox = (e) => {
-    setData({
-      ...data,
+    setInitialData({
+      ...initialData,
       [e.target.name]: e.target.checked,
     });
   };
@@ -70,25 +73,35 @@ const UpdateHostel = () => {
   const submitData = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("girls", data.girls);
-    formData.append("boys", data.boys);
-    formData.append("hostel_name", data.hostel_name);
-    formData.append("manager_name", data.manager_name);
-    formData.append("helpline_no", data.helpline_no);
-    formData.append("latitude", data.latitude);
-    formData.append("longitude", data.longitude);
-    formData.append("latitudeDelta", data.latitudeDelta);
-    formData.append("longitudeDelta", data.longitudeDelta);
-    formData.append("kms", data.kms);
-    formData.append("rooms_available", data.rooms_available);
-    formData.append("room_price", data.room_price);
-    formData.append("location", data.location);
+    formData.append("girls", initialData.girls);
+    formData.append("boys", initialData.boys);
+    formData.append("hostel_name", initialData.hostel_name);
+    formData.append("manager_name", initialData.manager_name);
+    formData.append("helpline_no", initialData.helpline_no);
+    formData.append("latitude", initialData.latitude);
+    formData.append("longitude", initialData.longitude);
+    formData.append("latitudeDelta", initialData.latitudeDelta);
+    formData.append("longitudeDelta", initialData.longitudeDelta);
+    formData.append("kms", initialData.kms);
+    formData.append("rooms_available", initialData.rooms_available);
+    formData.append("room_price", initialData.room_price);
+    formData.append("location", initialData.location);
     formData.append("hostel_image", file);
 
     axios
       .post(`http://localhost:8000/hostel/update/${hostel_id}`, formData)
-      .then(() => {
-        toast.success("Your Hostel Data Updated");
+      .then((res) => {
+
+        toast.success("Your Hostel Data Updated", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+        history.push("/");
       })
       .catch(() => {
         toast.error("Something went wrong. Please try again later.");
@@ -126,7 +139,7 @@ const UpdateHostel = () => {
                 <input
                   type="text"
                   class="form-control"
-                  value={data.hostel_name}
+                  defaultValue={initialData.hostel_name}
                   name="hostel_name"
                   onChange={handleData}
                   id="inputName5"
@@ -139,7 +152,7 @@ const UpdateHostel = () => {
                 <input
                   type="text"
                   class="form-control"
-                  value={data.manager_name}
+                  defaultValue={initialData.manager_name}
                   name="manager_name"
                   onChange={handleData}
                   id="inputEmail5"
@@ -152,7 +165,7 @@ const UpdateHostel = () => {
                 <input
                   type="number"
                   class="form-control"
-                  value={data.helpline_no}
+                  defaultValue={initialData.helpline_no}
                   name="helpline_no"
                   onChange={handleData}
                   id="inputPassword5"
@@ -165,7 +178,7 @@ const UpdateHostel = () => {
                 <input
                   type="text"
                   class="form-control"
-                  value={data.location}
+                  defaultValue={initialData.location}
                   name="location"
                   onChange={handleData}
                   id="inputCity"
@@ -178,7 +191,7 @@ const UpdateHostel = () => {
                 <input
                   type="number"
                   class="form-control"
-                  value={data.kms}
+                  defaultValue={initialData.kms}
                   name="kms"
                   onChange={handleData}
                   id="inputZip"
@@ -191,7 +204,7 @@ const UpdateHostel = () => {
                 <input
                   type="number"
                   class="form-control"
-                  value={data.rooms_available}
+                  defaultValue={initialData.rooms_available}
                   name="rooms_available"
                   onChange={handleData}
                   id="inputZip"
@@ -204,7 +217,7 @@ const UpdateHostel = () => {
                 <input
                   type="number"
                   class="form-control"
-                  value={data.room_price}
+                  defaultValue={initialData.room_price}
                   name="room_price"
                   onChange={handleData}
                   id="inputZip"
@@ -217,7 +230,7 @@ const UpdateHostel = () => {
                 <input
                   type="number"
                   class="form-control"
-                  value={data.longitude}
+                  defaultValue={initialData.longitude}
                   name="longitude"
                   onChange={handleData}
                   id="inputZip"
@@ -230,7 +243,7 @@ const UpdateHostel = () => {
                 <input
                   type="number"
                   class="form-control"
-                  value={data.latitude}
+                  defaultValue={initialData.latitude}
                   name="latitude"
                   onChange={handleData}
                   id="inputZip"
@@ -253,11 +266,11 @@ const UpdateHostel = () => {
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value={data.girls}
+                    defaultValue={initialData.girls}
                     name="girls"
                     onChange={handleCheckbox}
                     id="girls"
-                    checked={data.girls}
+                    checked={initialData.girls}
                   />
                   <label class="form-check-label" for="girls">
                     Girls
@@ -269,11 +282,11 @@ const UpdateHostel = () => {
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value={data.boys}
+                    defaultValue={initialData.boys}
                     name="boys"
                     onChange={handleCheckbox}
                     id="boys"
-                    checked={data.boys}
+                    checked={initialData.boys}
                   />
                   <label class="form-check-label" for="boys">
                     Boys
