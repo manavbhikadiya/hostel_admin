@@ -16,15 +16,15 @@ import Cookies from "universal-cookie";
 import UpdateHostel from "./components/UpdateHostel";
 
 const App = () => {
-  const cookies = new Cookies();
-  const dispatch = useDispatch();
+  // const cookies = new Cookies();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    const college_id = cookies.get("collegeId");
-    const admin_id = cookies.get("adminId");
-    console.log(college_id, "", admin_id);
-    dispatch(collegeId(college_id));
-  }, []);
+  // useEffect(() => {
+  //   const college_id = cookies.get("collegeId");
+  //   const admin_id = cookies.get("adminId");
+  //   console.log(college_id, "", admin_id);
+  //   dispatch(collegeId(college_id));
+  // }, []);
 
   return (
     <>

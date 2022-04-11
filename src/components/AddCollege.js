@@ -1,14 +1,15 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useHistory } from "react-router-dom";
+import { useHistory,useLocation } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 const College = () => {
   const cookies = new Cookies();
   const history = useHistory();
-
+  const search = useLocation().search;
+  const admin_id = new URLSearchParams(search).get("admin_id");
   const [collegeData, setCollegeData] = useState({
     college_name: "",
     district: "",
@@ -22,10 +23,13 @@ const College = () => {
     });
   };
 
+  useEffect(()=>{
+  },[])
+
   const submitData = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8000/college/addCollege", collegeData)
+      .post(`http://localhost:8000/college/addCollege/${admin_id}`, collegeData)
       .then((res) => {
         cookies.set('collegeId', res.data._id, { path: '/' });
         toast.success("College Details Added", {

@@ -36,7 +36,7 @@ const Register = () => {
           draggable: true,
           progress: undefined,
         });
-        history.push("/addCollege");
+        history.push(`/addCollege?admin_id=${res.data._id}`);
       })
       .catch((e) => {
         toast.error(e.response.data.message, {
