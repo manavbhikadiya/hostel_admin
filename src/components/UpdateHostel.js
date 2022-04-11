@@ -15,21 +15,6 @@ const UpdateHostel = () => {
   const [file, setFiles] = useState();
   const [initialData, setInitialData] = useState([]);
 
-  const [data, setData] = useState({
-    boys: false,
-    girls: false,
-    hostel_name: "",
-    manager_name: "",
-    helpline_no: null,
-    latitude: null,
-    longitude: null,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-    kms: null,
-    rooms_available: null,
-    room_price: null,
-    location: "",
-  });
 
   const getIntialHostelData = (college_id, hostel_id) => {
     axios
