@@ -24,7 +24,7 @@ const Register = () => {
   const submitEvent = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8000/admin/registerAdmin", registerData)
+      .post("/admin/registerAdmin", registerData)
       .then((res) => {
         cookies.set('adminId', res.data._id, { path: '/' });
         toast.success("Your data Registered", {

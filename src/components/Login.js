@@ -21,9 +21,8 @@ const Login = () => {
 
   const submitData = (e) => {
     e.preventDefault();
-    console.log(loginData);
     axios
-      .post("http://localhost:8000/admin/loginAdmin", loginData)
+      .post("/admin/loginAdmin", loginData)
       .then((res) => {
         if (res) {
           toast.success("Logged in successfully", {

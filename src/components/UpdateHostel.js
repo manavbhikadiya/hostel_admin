@@ -19,7 +19,7 @@ const UpdateHostel = () => {
   const getIntialHostelData = (college_id, hostel_id) => {
     axios
       .get(
-        `http://localhost:8000/hostel/getHostelDetails/${college_id}/${hostel_id}`
+        `/hostel/getHostelDetails/${college_id}/${hostel_id}`
       )
       .then((res) => {
 

@@ -11,15 +11,33 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [collegeId, setCollegeID] = useState(null);
   var college_id = null;
+  setCollegeID(college_id);
+
   useEffect(() => {
-    college_id = getCollegeId();
     setCollegeID(college_id);
+    callAbout();
     getHostelData();
   }, []);
 
+  const callAbout = async () => {
+    try {
+      axios
+        .get("/hostel/about")
+        .then((res) => {
+          collegeId = res.data.college_id;
+          setCollegeID(res.data.college_id);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getHostelData = () => {
     axios
-      .get(`http://localhost:8000/hostel/getAllHostelsOfCollege/${college_id}`)
+      .get(`/hostel/getAllHostelsOfCollege/${college_id}`)
       .then((res) => {
         setData(res.data);
       })
@@ -30,9 +48,8 @@ const Home = () => {
 
   const history = useHistory();
   const deleteHostel = (hostel_id) => {
-
     axios
-      .post(`http://localhost:8000/hostel/delete/${hostel_id}`)
+      .post(`/hostel/delete/${hostel_id}`)
       .then(() => {
         toast.error("Your Hostel is Deleted", {
           position: "top-right",
@@ -43,14 +60,14 @@ const Home = () => {
           draggable: true,
           progress: undefined,
         });
-        history.push('/')
+        history.push("/");
         window.location.reload();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         alert("Data Not Delete");
-      })
-  }
+      });
+  };
 
   return (
     <main id="main" className="main">
@@ -90,9 +107,14 @@ const Home = () => {
                     <td>{hostels.location}</td>
                     <td>
                       <span onClick={() => deleteHostel(hostels._id)}>
-                        <i class="fa fa-trash" style={{ color: "red", cursor: "pointer" }}></i>
+                        <i
+                          class="fa fa-trash"
+                          style={{ color: "red", cursor: "pointer" }}
+                        ></i>
                       </span>
-                      <NavLink to={`/updateHostel?college_id=${collegeId}&hostel_id=${hostels._id}`}>
+                      <NavLink
+                        to={`/updateHostel?college_id=${collegeId}&hostel_id=${hostels._id}`}
+                      >
                         <i
                           class="fa fa-edit"
                           style={{ marginLeft: "20px", color: "black" }}

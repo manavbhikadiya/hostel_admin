@@ -29,7 +29,7 @@ const College = () => {
   const submitData = (e) => {
     e.preventDefault();
     axios
-      .post(`http://localhost:8000/college/addCollege/${admin_id}`, collegeData)
+      .post(`/college/addCollege/${admin_id}`, collegeData)
       .then((res) => {
         cookies.set('collegeId', res.data._id, { path: '/' });
         toast.success("College Details Added", {
@@ -41,7 +41,7 @@ const College = () => {
           draggable: true,
           progress: undefined,
         });
-        history.push("/");
+        history.push("/login");
       })
       .catch((e) => {
         toast.error(e.response.data.message, {

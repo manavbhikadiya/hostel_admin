@@ -66,7 +66,7 @@ const AddHostel = () => {
     formData.append("hostel_image", file);
 
     axios
-      .post(`http://localhost:8000/hostel/addHostel/${college_id}`, formData)
+      .post(`/hostel/addHostel/${college_id}`, formData)
       .then(() => {
         toast.success("Your Hostel is Live now", {
           position: "top-right",
