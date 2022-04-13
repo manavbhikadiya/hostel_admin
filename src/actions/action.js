@@ -1,9 +1,9 @@
-export const userId = (userId) => ({
-    type: "USER_ID",
-    payload: userId,
+export const login = (collegeId) => ({
+    type: "LOGIN",
+    payload: collegeId,
   });
 
-  export const collegeId = (collegeId) =>({
-    type: "COLLEGE_ID",
-    payload: collegeId,
-  })
+export const adminData = (data) =>({
+  type: "ADMIN_DATA",
+  payload: data
+})

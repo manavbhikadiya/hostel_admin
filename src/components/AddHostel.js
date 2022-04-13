@@ -1,12 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getCollegeId } from "../services/getCookies.service";
-
+import { useSelector } from "react-redux";
 const AddHostel = () => {
-  var college_id = getCollegeId();
+  const collegeId = useSelector(state => state.adminReducer);
   const history = useHistory();
   const [file, setFiles] = useState();
   const [data, setData] = useState({
@@ -25,9 +24,6 @@ const AddHostel = () => {
     location: "",
   });
 
-  useEffect(() => {
-    college_id = getCollegeId();
-  }, []);
 
   const handleData = (e) => {
     setData({
@@ -66,7 +62,7 @@ const AddHostel = () => {
     formData.append("hostel_image", file);
 
     axios
-      .post(`/hostel/addHostel/${college_id}`, formData)
+      .post(`/hostel/addHostel/${collegeId}`, formData)
       .then(() => {
         toast.success("Your Hostel is Live now", {
           position: "top-right",

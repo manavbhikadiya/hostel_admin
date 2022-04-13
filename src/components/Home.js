@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-import { getCollegeId, getAdminId } from "../services/getCookies.service";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,35 +8,15 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
   const [data, setData] = useState([]);
-  const [collegeId, setCollegeID] = useState(null);
-  var college_id = null;
-  setCollegeID(college_id);
+  const collegeId = useSelector((state) => state.adminReducer);
 
   useEffect(() => {
-    setCollegeID(college_id);
-    callAbout();
     getHostelData();
   }, []);
 
-  const callAbout = async () => {
-    try {
-      axios
-        .get("/hostel/about")
-        .then((res) => {
-          collegeId = res.data.college_id;
-          setCollegeID(res.data.college_id);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const getHostelData = () => {
     axios
-      .get(`/hostel/getAllHostelsOfCollege/${college_id}`)
+      .get(`/hostel/getAllHostelsOfCollege/${collegeId}`)
       .then((res) => {
         setData(res.data);
       })

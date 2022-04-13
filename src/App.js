@@ -10,43 +10,54 @@ import College from "./components/AddCollege";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
-import { collegeId } from "./actions/action";
+import { login,adminData } from "./actions/action";
 import { useEffect } from "react";
-import Cookies from "universal-cookie";
 import UpdateHostel from "./components/UpdateHostel";
+import axios from "axios";
 
 const App = () => {
-  // const cookies = new Cookies();
-  // const dispatch = useDispatch();
+  
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const college_id = cookies.get("collegeId");
-  //   const admin_id = cookies.get("adminId");
-  //   console.log(college_id, "", admin_id);
-  //   dispatch(collegeId(college_id));
-  // }, []);
+  useEffect(() => {
+    getInitialData()
+  }, []);
+
+  const getInitialData = () =>{
+    axios.get('/hostel/initalData')
+    .then((res)=>{
+      dispatch(login(res.data.college_id))
+      dispatch(adminData(res.data))
+    })
+    .catch((e)=>{
+      console.log(e);
+    })
+  }
 
   return (
     <>
       <ToastContainer />
-      <Navbar />
       <Switch>
         <Route path="/login">
           <Login />
         </Route>
-        <Route path="/addCollege">
-          <College />
-        </Route>
         <Route path="/register">
           <Register />
         </Route>
+        <Route path="/addCollege">
+          <Navbar />
+          <College />
+        </Route>
         <Route exact path="/">
+          <Navbar />
           <Home />
         </Route>
         <Route path="/addHostel">
+          <Navbar />
           <AddHostel />
         </Route>
         <Route path="/updateHostel">
+          <Navbar />
           <UpdateHostel/>
         </Route>
       </Switch>

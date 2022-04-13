@@ -1,14 +1,19 @@
-const initialData = {
-    userId:"",
-    college_id:""
+const collegeId = "6256c1744b7987339b6f2ab8";
+const adminData = {};
+
+export const adminReducer = (state = collegeId, action) => {
+  switch (action.type) {
+    case "LOGIN":
+      return (state = action.payload);
+    default:
+      return state;
+  }
 };
 
-export const adminReducer = (state = initialData, action) => {
+export const adminDataReducer = (state = adminData, action) => {
   switch (action.type) {
-    case "USER_ID":
-      return (state.userId = action.payload);
-    case "COLLEGE_ID":
-        return (state.college_id = action.payload);
+    case "ADMIN_DATA":
+      return (state = action.payload);
     default:
       return state;
   }

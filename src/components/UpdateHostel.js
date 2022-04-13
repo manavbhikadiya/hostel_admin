@@ -15,14 +15,12 @@ const UpdateHostel = () => {
   const [file, setFiles] = useState();
   const [initialData, setInitialData] = useState([]);
 
-
   const getIntialHostelData = (college_id, hostel_id) => {
     axios
       .get(
         `/hostel/getHostelDetails/${college_id}/${hostel_id}`
       )
       .then((res) => {
-
         setInitialData(res.data);
       })
       .catch((e) => {

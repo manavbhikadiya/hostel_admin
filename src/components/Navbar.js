@@ -1,6 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar';
 const Navbar = () => {
+    // const adminData = useSelector(state=> state.adminDataReducer);
+    // const userName = adminData.username.toUpperCase();
+    // const full_name = adminData.name;
+    // const userEmail = adminData.email;
     return (
         <>
             <header id="header" className="header fixed-top d-flex align-items-center">
@@ -17,12 +22,12 @@ const Navbar = () => {
                         <li className="nav-item dropdown pe-3">
                             <a className="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                                 <img src={require('../assets/profile-img.jpg')} alt="Profile" className="rounded-circle" />
-                                <span className="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                                {/* <span className="d-none d-md-block dropdown-toggle ps-2">{userName}</span> */}
                             </a>
                             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                                 <li className="dropdown-header">
-                                    <h6>Kevin Anderson</h6>
-                                    <span>Admin</span>
+                                    {/* <h6>{full_name}</h6> */}
+                                    {/* <span>{userEmail}</span> */}
                                 </li>
                                 <li>
                                     <hr className="dropdown-divider" />
