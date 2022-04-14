@@ -66,8 +66,10 @@ const Home = () => {
       </div>
       <div className="row">
         {data.map((college, index) =>
-          college.hostels.map((hostels, index) => (
-            <HostelCards
+          college.hostels.map((hostels, index) => {
+            console.log(hostels)
+
+            return (<HostelCards
               hostel_id ={hostels._id}
               college_id={collegeId}
               hostelName={hostels.hostel_name}
@@ -80,8 +82,9 @@ const Home = () => {
               hostel_image={hostels.hostel_image}
               boys={hostels.boys}
               girls={hostels.girls}
-            />
-          ))
+            />)
+          }
+          )
         )}
       </div>
     </main>

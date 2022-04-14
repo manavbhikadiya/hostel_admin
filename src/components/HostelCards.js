@@ -28,6 +28,7 @@ const HostelCards = (props) => {
         alert("Data Not Delete");
       });
   };
+  console.log(props);
   return (
     <>
       <div className="col-sm-4">
@@ -35,7 +36,7 @@ const HostelCards = (props) => {
           <div className="card-body">
             <div className="headerContainer">
               <img
-                src={require("../assets/profile-img.jpg")}
+                src={props.hostel_image}
                 className="hostelImage"
                 alt="hostelimage"
               />
