@@ -1065,3 +1065,73 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 13px;
   color: #012970;
 }
+
+/* Hostel cards */
+.headerContainer{
+  display: flex;
+  flex-direction: row;
+}
+.hostelImage{
+  width: 150px;
+  height: 150px;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+.hostelNameContainer{
+  margin-top: 20px;
+  margin-left: 20px;
+}
+.hostelName{
+  color: #012970;
+  font-weight: bold;
+  font-size: 25px;
+}
+.boysGirlsContainer{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 15px;
+  justify-content: space-around
+}
+.boysgirlsText{
+  font-size: 15px;
+  font-weight: bold;
+  color: darkslategray;
+  align-items: center;
+}
+.managerNameContainer{
+  margin-top: 15px;
+}
+.managerNameHeadingText{
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+}
+.managerName {
+  color: #012970;
+  font-weight: bold;
+  font-size: 14px;
+}
+.priceroomContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.contactContainer{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.contactHeading{
+  color: #012970;
+  font-weight: bold;
+  font-size: 25px;
+}
+.mobilenumber{
+  font-size: 18px;
+  margin-top: 10px;
+}
+.deleteUpdateContainer{
+  margin-top: 20px;
+}

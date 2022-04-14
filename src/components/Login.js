@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useDispatch } from "react-redux";
+import { login, adminData, isLoggedIn } from "../actions/action";
+import { getInitialData } from "../services/getInitialData.service";
 const Login = () => {
   const history = useHistory();
-
+  const dispatch = useDispatch();
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
@@ -19,39 +20,54 @@ const Login = () => {
     });
   };
 
-  const submitData = (e) => {
+  const submitData = async (e) => {
     e.preventDefault();
-    axios
-      .post("/admin/loginAdmin", loginData)
-      .then((res) => {
-        if (res) {
-          toast.success("Logged in successfully", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-          });
-          history.push("/");
-        }
-      })
-      .catch((e) => {
-        toast.error("Having trouble. Please try again later.",{
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-        });
-        setLoginData({
-            username:"",
-            password:""
-        })
+    const res = await fetch("/admin/loginAdmin", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    });
+    const data = await res.json();
+    if (data) {
+      toast.success("Logged in successfully", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
       });
+      const storeData = await getInitialData();
+      if (storeData) {
+        localStorage.setItem('college_id',data.college_id)
+        localStorage.setItem('loginToken',true)
+        dispatch(login(data.college_id));
+        dispatch(adminData(data));
+        dispatch(isLoggedIn(true));
+      } else {
+        dispatch(isLoggedIn(false));
+      }
+      history.push("/");
+      window.location.reload();
+    } else {
+      toast.error("Having trouble. Please try again later.", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+      setLoginData({
+        username: "",
+        password: "",
+      });
+    }
   };
 
   return (

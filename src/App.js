@@ -9,56 +9,41 @@ import Register from "./components/Register";
 import College from "./components/AddCollege";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
-import { login,adminData } from "./actions/action";
-import { useEffect } from "react";
 import UpdateHostel from "./components/UpdateHostel";
-import axios from "axios";
-
+import AuthGaurd from "./components/AuthGaurd";
 const App = () => {
-  
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    getInitialData()
-  }, []);
-
-  const getInitialData = () =>{
-    axios.get('/hostel/initalData')
-    .then((res)=>{
-      dispatch(login(res.data.college_id))
-      dispatch(adminData(res.data))
-    })
-    .catch((e)=>{
-      console.log(e);
-    })
-  }
-
   return (
     <>
       <ToastContainer />
       <Switch>
         <Route path="/login">
-          <Login />
+          <AuthGaurd>
+            <Login />
+          </AuthGaurd>
         </Route>
         <Route path="/register">
           <Register />
         </Route>
         <Route path="/addCollege">
-          <Navbar />
           <College />
         </Route>
         <Route exact path="/">
-          <Navbar />
-          <Home />
+          <AuthGaurd>
+            <Navbar />
+            <Home />
+          </AuthGaurd>
         </Route>
         <Route path="/addHostel">
-          <Navbar />
-          <AddHostel />
+          <AuthGaurd>
+            <Navbar />
+            <AddHostel />
+          </AuthGaurd>
         </Route>
         <Route path="/updateHostel">
-          <Navbar />
-          <UpdateHostel/>
+          <AuthGaurd>
+            <Navbar />
+            <UpdateHostel />
+          </AuthGaurd>
         </Route>
       </Switch>
     </>

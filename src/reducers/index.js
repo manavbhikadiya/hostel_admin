@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
-import { adminReducer,adminDataReducer } from "./adminReducer";
+import { adminReducer,adminDataReducer,checkLoginReducer } from "./adminReducer";
 
 const rootReducers = combineReducers({
     adminReducer,
-    adminDataReducer
+    adminDataReducer,
+    checkLoginReducer,
 })
 export default rootReducers;

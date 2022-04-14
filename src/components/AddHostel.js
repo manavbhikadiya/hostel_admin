@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSelector } from "react-redux";
+
 const AddHostel = () => {
-  const collegeId = useSelector(state => state.adminReducer);
+  const collegeId = localStorage.getItem('college_id');
   const history = useHistory();
   const [file, setFiles] = useState();
   const [data, setData] = useState({

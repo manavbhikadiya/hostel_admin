@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
+import HostelCards from "./HostelCards";
 
 const Home = () => {
   const [data, setData] = useState([]);
-  const collegeId = useSelector((state) => state.adminReducer);
+  const collegeId = localStorage.getItem("college_id");
+  // const collegeId = useSelector((state) => state.adminReducer);
+
+  console.log(collegeId);
 
   useEffect(() => {
     getHostelData();
@@ -61,51 +64,25 @@ const Home = () => {
           </ol>
         </nav>
       </div>
-      <div className="card">
-        <div className="card-body">
-          <h5 className="card-title">Default Table</h5>
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Hostel Name</th>
-                <th scope="col">Rooms</th>
-                <th scope="col">Price/Year</th>
-                <th scope="col">Location</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((college, index) =>
-                college.hostels.map((hostels, index) => (
-                  <tr>
-                    <th scope="row">{index + 1}</th>
-                    <td>{hostels.hostel_name}</td>
-                    <td>{hostels.rooms_available}</td>
-                    <td>{hostels.room_price}</td>
-                    <td>{hostels.location}</td>
-                    <td>
-                      <span onClick={() => deleteHostel(hostels._id)}>
-                        <i
-                          class="fa fa-trash"
-                          style={{ color: "red", cursor: "pointer" }}
-                        ></i>
-                      </span>
-                      <NavLink
-                        to={`/updateHostel?college_id=${collegeId}&hostel_id=${hostels._id}`}
-                      >
-                        <i
-                          class="fa fa-edit"
-                          style={{ marginLeft: "20px", color: "black" }}
-                        ></i>
-                      </NavLink>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+      <div className="row">
+        {data.map((college, index) =>
+          college.hostels.map((hostels, index) => (
+            <HostelCards
+              hostel_id ={hostels._id}
+              college_id={collegeId}
+              hostelName={hostels.hostel_name}
+              managerName={hostels.manager_name}
+              helpline_no={hostels.helpline_no}
+              kms={hostels.kms}
+              rooms_available={hostels.rooms_available}
+              room_price={hostels.room_price}
+              location={hostels.location}
+              hostel_image={hostels.hostel_image}
+              boys={hostels.boys}
+              girls={hostels.girls}
+            />
+          ))
+        )}
       </div>
     </main>
   );

@@ -1,11 +1,32 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Sidebar from './Sidebar';
 const Navbar = () => {
+
+    const history = useHistory()
     // const adminData = useSelector(state=> state.adminDataReducer);
     // const userName = adminData.username.toUpperCase();
     // const full_name = adminData.name;
     // const userEmail = adminData.email;
+
+    const logout = async () =>{
+        const res = await fetch('admin/logout',{
+            method:"GET",
+            headers:{
+                Accept:"application/json",
+                "Content-type":"application/json"
+            },
+            credentials:"include"
+        })
+        if(res){
+            localStorage.removeItem('college_id');
+            localStorage.removeItem('loginToken');
+            history.push('/login')
+        }else{
+            history.push('/');
+        }
+    }
     return (
         <>
             <header id="header" className="header fixed-top d-flex align-items-center">
@@ -33,10 +54,10 @@ const Navbar = () => {
                                     <hr className="dropdown-divider" />
                                 </li>
                                 <li>
-                                    <a className="dropdown-item d-flex align-items-center" href="#">
+                                    <div className="dropdown-item d-flex align-items-center" href="#" onClick={logout}>
                                         <i className="bi bi-box-arrow-right"></i>
                                         <span>Sign Out</span>
-                                    </a>
+                                    </div>
                                 </li>
                             </ul>
                         </li>
