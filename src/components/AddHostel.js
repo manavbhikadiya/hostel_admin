@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "react-js-loader";
 
 const AddHostel = () => {
-  const collegeId = localStorage.getItem('college_id');
+  const collegeId = localStorage.getItem("college_id");
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
   const [file, setFiles] = useState();
   const [data, setData] = useState({
     boys: false,
@@ -23,7 +25,6 @@ const AddHostel = () => {
     room_price: null,
     location: "",
   });
-
 
   const handleData = (e) => {
     setData({
@@ -44,6 +45,7 @@ const AddHostel = () => {
   };
 
   const submitData = (e) => {
+    setIsLoading(true)
     e.preventDefault();
     const formData = new FormData();
     formData.append("girls", data.girls);
@@ -73,10 +75,12 @@ const AddHostel = () => {
           draggable: true,
           progress: undefined,
         });
+        setIsLoading(false);
         history.push("/");
       })
       .catch(() => {
         toast.error("Something went wrong. Please try again later.");
+        setIsLoading(false);
       });
   };
 
@@ -263,11 +267,22 @@ const AddHostel = () => {
                   </label>
                 </div>
               </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary">
-                  Post Hostel
-                </button>
-              </div>
+              {isLoading ? (
+                <div class="text-center">
+                  <Loader
+                    type="bubble-scale"
+                    bgColor={"#012970"}
+                    color={"#012970"}
+                    size={25}
+                  />
+                </div>
+              ) : (
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">
+                    Post Hostel
+                  </button>
+                </div>
+              )}
             </form>
           </div>
         </div>

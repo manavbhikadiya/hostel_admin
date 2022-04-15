@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import Sidebar from './Sidebar';
 const Navbar = () => {
 
@@ -31,10 +31,10 @@ const Navbar = () => {
         <>
             <header id="header" className="header fixed-top d-flex align-items-center">
                 <div className="d-flex align-items-center justify-content-between">
-                    <a href="index.html" className="logo d-flex align-items-center">
-                        <img src="assets/img/logo.png" alt="" />
+                    <NavLink to="/" className="logo d-flex align-items-center">
+                        <img src={require('../assets/avtar.png')} alt="" />
                         <span className="d-none d-lg-block">Hostel x</span>
-                    </a>
+                    </NavLink>
                     <i className="bi bi-list toggle-sidebar-btn"></i>
                 </div>
                 <nav className="header-nav ms-auto">

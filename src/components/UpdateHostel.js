@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import Loader from "react-js-loader";
 
 const UpdateHostel = () => {
   const search = useLocation().search;
@@ -12,6 +13,7 @@ const UpdateHostel = () => {
   var hostel_id = new URLSearchParams(search).get("hostel_id");
 
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
   const [file, setFiles] = useState();
   const [initialData, setInitialData] = useState([]);
 
@@ -55,6 +57,7 @@ const UpdateHostel = () => {
 
   const submitData = (e) => {
     e.preventDefault();
+    setIsLoading(true)
     const formData = new FormData();
     formData.append("girls", initialData.girls);
     formData.append("boys", initialData.boys);
@@ -84,10 +87,12 @@ const UpdateHostel = () => {
           draggable: true,
           progress: undefined,
         });
+        setIsLoading(false)
         history.push("/");
       })
       .catch(() => {
         toast.error("Something went wrong. Please try again later.");
+        setIsLoading(false)
       });
   };
 
@@ -276,11 +281,22 @@ const UpdateHostel = () => {
                   </label>
                 </div>
               </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary">
-                  Update Hostel
-                </button>
-              </div>
+              {isLoading ? (
+                <div class="text-center">
+                  <Loader
+                    type="bubble-scale"
+                    bgColor={"#012970"}
+                    color={"#012970"}
+                    size={25}
+                  />
+                </div>
+              ) : (
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">
+                    Update Hostel
+                  </button>
+                </div>
+              )}
             </form>
           </div>
         </div>

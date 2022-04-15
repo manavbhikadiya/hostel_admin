@@ -1076,6 +1076,9 @@ h1, h2, h3, h4, h5, h6 {
   height: 150px;
   border-radius: 15px;
   margin-top: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  object-fit: cover;
 }
 .hostelNameContainer{
   margin-top: 20px;
@@ -1089,9 +1092,10 @@ h1, h2, h3, h4, h5, h6 {
 .boysGirlsContainer{
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 200px;
   margin-top: 15px;
-  justify-content: space-around
+  justify-content: space-between;
+  /* background-color: red; */
 }
 .boysgirlsText{
   font-size: 15px;
@@ -1134,4 +1138,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 .deleteUpdateContainer{
   margin-top: 20px;
+}
+.sideBarItemName{
+  color: #012970;
+}
+
+.nav-item .activeLink{
+  background-color: transparent;
 }

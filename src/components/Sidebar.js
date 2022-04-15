@@ -7,15 +7,15 @@ const Sidebar = () => {
             <aside id="sidebar" className="sidebar">
                 <ul className="sidebar-nav" id="sidebar-nav">
                     <li className="nav-item">
-                        <NavLink className="nav-link" to="/">
-                            <i className="fa fa-grid"></i>
-                            <span>Hostel List</span>
+                        <NavLink className="nav-link activeLink" to="/">
+                            <i className="fa fa-list"></i>
+                            <span className='sideBarItemName'>Hostel List</span>
                         </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink className="nav-link" to="/addHostel">
-                            <i className="bi bi-grid"></i>
-                            <span>Add Hostel</span>
+                        <NavLink className="nav-link activeLink" to="/addHostel">
+                            <i className="fa fa-home"></i>
+                            <span className='sideBarItemName'>Add Hostel</span>
                         </NavLink>
                     </li>
                 </ul>

@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSelector } from "react-redux";
+import Loader from "react-js-loader";
 import HostelCards from "./HostelCards";
 
 const Home = () => {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const collegeId = localStorage.getItem("college_id");
-  // const collegeId = useSelector((state) => state.adminReducer);
-
-  console.log(collegeId);
 
   useEffect(() => {
     getHostelData();
@@ -22,32 +18,11 @@ const Home = () => {
       .get(`/hostel/getAllHostelsOfCollege/${collegeId}`)
       .then((res) => {
         setData(res.data);
+        setIsLoading(false);
       })
       .catch((e) => {
         alert("Data Not found");
-      });
-  };
-
-  const history = useHistory();
-  const deleteHostel = (hostel_id) => {
-    axios
-      .post(`/hostel/delete/${hostel_id}`)
-      .then(() => {
-        toast.error("Your Hostel is Deleted", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-        });
-        history.push("/");
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("Data Not Delete");
+        setIsLoading(false);
       });
   };
 
@@ -64,27 +39,31 @@ const Home = () => {
           </ol>
         </nav>
       </div>
+      {
+        isLoading?(<Loader type="bubble-scale" bgColor={"#012970"} title={"Loading..."} color={'#012970'} size={50} />):('')
+      }
       <div className="row">
         {data.map((college, index) =>
           college.hostels.map((hostels, index) => {
-            console.log(hostels)
+            console.log(hostels);
 
-            return (<HostelCards
-              hostel_id ={hostels._id}
-              college_id={collegeId}
-              hostelName={hostels.hostel_name}
-              managerName={hostels.manager_name}
-              helpline_no={hostels.helpline_no}
-              kms={hostels.kms}
-              rooms_available={hostels.rooms_available}
-              room_price={hostels.room_price}
-              location={hostels.location}
-              hostel_image={hostels.hostel_image}
-              boys={hostels.boys}
-              girls={hostels.girls}
-            />)
-          }
-          )
+            return (
+              <HostelCards
+                hostel_id={hostels._id}
+                college_id={collegeId}
+                hostelName={hostels.hostel_name}
+                managerName={hostels.manager_name}
+                helpline_no={hostels.helpline_no}
+                kms={hostels.kms}
+                rooms_available={hostels.rooms_available}
+                room_price={hostels.room_price}
+                location={hostels.location}
+                hostel_image={hostels.hostel_image}
+                boys={hostels.boys}
+                girls={hostels.girls}
+              />
+            );
+          })
         )}
       </div>
     </main>
